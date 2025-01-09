@@ -1,0 +1,22 @@
+name: fundamental_analysis
+author: nic
+version: 0.1.0
+type: custom
+description: A tool for analyzing the fundamentals of a single token or crypto projectusing multiple data sources and AI analysis
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint: {}
+fingerprint_ignore_patterns: []
+entry_point: fundamental_analysis.py
+callable: run
+dependencies:
+  openai:
+    version: '*'
+  requests:
+    version: '*'
+  functools:
+    version: '*'
+  typing:
+    version: '*'
+  datetime:
+    version: '*' 
