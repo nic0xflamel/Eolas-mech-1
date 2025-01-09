@@ -17,3 +17,5 @@ dependencies:
     version: '>=0.1.0'
   python-dotenv:
     version: '>=1.0.0'
+  openai:
+    version: '>=1.58.1'
