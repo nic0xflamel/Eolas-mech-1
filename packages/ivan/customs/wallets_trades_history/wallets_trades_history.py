@@ -82,7 +82,7 @@ def generate_sql_query(wallets: List[str], days: int) -> str:
       tx_hash AS "Transaction Hash", 
       blockchain AS "Blockchain"
     FROM crosschain.defi.ez_dex_swaps
-    WHERE trader IN {wallet_list}
+    WHERE trader IN lower({wallet_list})
       AND amount_out_usd IS NOT NULL
       AND amount_in_usd IS NOT NULL
       AND block_timestamp > CURRENT_TIMESTAMP() - interval '{days} day'
