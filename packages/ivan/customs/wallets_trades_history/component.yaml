@@ -8,7 +8,7 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeic4ouckodzlsu3ehpfoh776emhewdnr22x2ed4mjrmihmqblagmtm
-  wallets_trades_history.py: bafybeiekqaxdiehj2waevkaxmrjnhnptfu7wfcvw6inklx4nli53sjdaia
+  wallets_trades_history.py: bafybeibllhiiwg2i2lvatimsjj6kgci3qls5nbr7xl2oed6s6eqsj6dewa
 fingerprint_ignore_patterns: []
 entry_point: wallets_trades_history.py
 callable: run
