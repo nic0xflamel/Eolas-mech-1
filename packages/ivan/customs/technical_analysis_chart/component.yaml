@@ -1,0 +1,27 @@
+name: technical_analysis_chart
+author: ivan
+version: 0.1.0
+type: custom
+description: A tool for generating technical analysis charts for cryptocurrency trading
+  pairs. Supports multiple technical indicators including EMA, Supertrend, PSAR, RSI,
+  MFI, Bollinger Bands, VWAP, Rate of Change, Momentum, and WMA. Charts are generated
+  using market data with customizable time intervals.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeifap5xnkky6ew6kl5ubvefhg2sbjiugigmbhnrtgsvkbmifoh4u6i
+  technical_analysis_chart.py: bafybeihrti4iywshxmxoj2o4skdyq2u2w4rghm4oywzxbjw3d4cyzyknla
+fingerprint_ignore_patterns: []
+entry_point: technical_analysis_chart.py
+callable: run
+dependencies:
+  openai:
+    version: '>=1.58.1'
+  lunarcrush:
+    version: '>=1.0.0'
+  requests:
+    version: '>=2.29.0'
+  pandas:
+    version: '>=2.0.0'
+  pandas_ta:
+    version: '>=1.0.0'
