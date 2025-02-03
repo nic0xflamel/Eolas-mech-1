@@ -1,0 +1,22 @@
+name: sentiment_analysis
+author: ivan
+version: 0.1.0
+type: custom
+description: A tool for analyzing market sentiment and social metrics for cryptocurrency
+  tokens using LunarCrush dataA tool for analyzing market sentiment and social metrics
+  for cryptocurrency tokens using LunarCrush data
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeiazduowyyddtfzf3yrf7xpuuw4tgfemdgoxf7ixx7y5c3pdgyvhpa
+  sentiment_analysis.py: bafybeia3bdxoebqm74t53rpcsqplca44hv5sx3nyjajctkhzzsafwzomj4
+fingerprint_ignore_patterns: []
+entry_point: sentiment_analysis.py
+callable: run
+dependencies:
+  openai:
+    version: '>=1.58.1'
+  lunarcrush:
+    version: '>=1.0.0'
+  requests:
+    version: '>=2.29.0'
