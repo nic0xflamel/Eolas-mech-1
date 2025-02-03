@@ -8,7 +8,7 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeigqldqyi5ot3fznad6v57ql2txszoryc5cgxxyif65djscggkjure
-  investment_recommendation.py: bafybeidkkydtgb2obsvtwy4wvngiodu3mvtlw3rcc5krwf3eumg6q32w5q
+  investment_recommendation.py: bafybeicnq3lrrbglznz3zqeettxdkz6lv4ysulelg462rkpx4b42sk2rsm
 fingerprint_ignore_patterns: []
 entry_point: investment_recommendation.py
 callable: run
