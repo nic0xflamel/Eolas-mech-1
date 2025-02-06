@@ -24,22 +24,13 @@ import base64
 # Load environment variables
 load_dotenv()
 
-valid_indicators = [
-    # Trend Indicators (3)
-    "ema",
-    "supertrend", 
-    "psar",
-    # Momentum Indicators (2)
-    "rsi",
-    "mfi",
-    # Volume & Volatility (2)
-    "bbands",
-    "vwap",
-    # Support/Resistance & Additional Indicators (3)
-    "roc",
-    "mom",
-    "wma",
-]
+# Indicators that are overlayed on the price chart
+overlay_indicators = {'ema', 'bbands', 'supertrend', 'psar', 'vwap', 'wma'}
+# Indicators that are separate from the price chart
+separate_indicators = {'rsi', 'mfi', 'roc', 'mom'}
+
+# Valid indicators
+valid_indicators = list(overlay_indicators | separate_indicators)
 
 class ChartGenerator:
     """Chart generation tool for technical analysis using market data and indicators."""
@@ -92,17 +83,12 @@ class ChartGenerator:
 
             # Fetch Candle data
             candle_data = self.fetch_candle_data(pair, interval=interval)
-
-            print(f"Candle data: {candle_data}")
             if not candle_data:
                 return {
                     "error": f"Could not fetch Candle data for {pair} on {interval} timeframe."
                 }
             
-            chart_images = []
-            for indicator in indicators:
-                chart_image = self.generate_chart(indicator, pair, interval, candle_data)
-                chart_images.append(chart_image)
+            chart_image = self.generate_chart(indicators, pair, interval, candle_data)
 
             # Store all context in metadata
             metadata = {
@@ -115,7 +101,7 @@ class ChartGenerator:
                 "technical_indicators": indicators,
             }
 
-            return {"response": chart_images, "metadata": metadata}
+            return {"response": chart_image, "metadata": metadata}
 
         except Exception as e:
             return {"error": str(e)}
@@ -283,8 +269,8 @@ IMPORTANT: Respond with ONLY the raw JSON object. Do not include markdown format
             )
 
 
-    def generate_chart(self, indicator: str, pair: str, interval: str, price_data: Dict[str, List[Any]]) -> str:
-        """Generate a price chart with technical indicators using pandas and pandas_ta.
+    def generate_chart(self, indicators: List[str], pair: str, interval: str, price_data: Dict[str, List[Any]]) -> str:
+        """Generate a price chart with multiple technical indicators.
         
         Args:
             indicators: List of technical indicators to include
@@ -295,7 +281,7 @@ IMPORTANT: Respond with ONLY the raw JSON object. Do not include markdown format
         Returns:
             Base64 encoded chart image with data URI prefix for direct PNG viewing
         """
-        print(f"Generating chart for {pair} with indicator: {indicator}")
+        print(f"Generating chart for {pair} with indicators: {indicators}")
 
         # Extract data from dictionaries into lists
         datetimes = price_data['timestamp'][:]
@@ -319,181 +305,135 @@ IMPORTANT: Respond with ONLY the raw JSON object. Do not include markdown format
         df.set_index('datetime', inplace=True)
         df.sort_index(inplace=True)
         
-        # Plot price
+        # Count how many separate panels we need
+        n_separate = sum(1 for ind in indicators if ind in separate_indicators)
+
+        # Create figure with appropriate number of subplots
+        fig, axs = plt.subplots(n_separate + 1, 1, 
+                           gridspec_kw={'height_ratios': [3] + [1] * n_separate}, 
+                           figsize=(12, 8 + 2 * n_separate))
+        
+        # Convert axs to array if only one subplot
+        if n_separate == 0:
+            axs = [axs]
+
+        # Plot price chart
+        price_ax = axs[0]
+        price_ax.plot(df.close, label='Price', color='blue')
+        price_ax.set_title(f'{pair} Price Chart ({interval})')
+        price_ax.set_ylabel('Price')
+        price_ax.grid(True)
+
+        # Set only the left x-axis limit to match data start
+        left_limit = df.index[0]
+        price_ax.set_xlim(left=left_limit)
+
+        # Track current subplot index for separate indicators
+        current_subplot = 1
+
+        # Add each indicator
+        for indicator in indicators:
+            if indicator in overlay_indicators:
+                # Add overlay indicators to main price plot
+                if indicator == 'ema':
+                    df['EMA'] = ta.ema(df.close)
+                    price_ax.plot(df['EMA'], color='orange', label='EMA')
+                
+                elif indicator == 'bbands':
+                    bbands = ta.bbands(df.close, length=20, std=2)
+                    price_ax.plot(bbands['BBU_20_2.0'], label='Upper BB', color='red', linestyle='--')
+                    price_ax.plot(bbands['BBM_20_2.0'], label='Middle BB', color='grey', linestyle='-')
+                    price_ax.plot(bbands['BBL_20_2.0'], label='Lower BB', color='green', linestyle='--')
+                
+                elif indicator == 'supertrend':
+                    supertrend = ta.supertrend(high=df.high, low=df.low, close=df.close, length=7, multiplier=3.0)
+                    df['SUPERTREND'] = supertrend['SUPERT_7_3.0']
+                    df['SUPERTREND_DIRECTION'] = supertrend['SUPERTd_7_3.0']
+                    
+                    # Remove garbage datapoints where supertrend is 0
+                    df['SUPERTREND'] = df['SUPERTREND'].replace(0, float('nan'))
+                    
+                    # Plot Supertrend with different colors based on direction
+                    for i in range(len(df)-1):
+                        if df['SUPERTREND_DIRECTION'].iloc[i] == 1:  # Uptrend
+                            price_ax.plot(df.index[i:i+2], df['SUPERTREND'].iloc[i:i+2], 
+                                    color='green', label='Supertrend' if i == 0 else "")
+                        else:  # Downtrend
+                            price_ax.plot(df.index[i:i+2], df['SUPERTREND'].iloc[i:i+2], 
+                                    color='red', label='Supertrend' if i == 0 else "")
+                
+                elif indicator == 'psar':
+                    psar = ta.psar(high=df.high, low=df.low, close=df.close)
+                    df['PSARl_0.02_0.2'] = psar['PSARl_0.02_0.2']  # Long position SAR
+                    df['PSARs_0.02_0.2'] = psar['PSARs_0.02_0.2']  # Short position SAR
+                    
+                    # Plot PSAR dots, filtering out 0 values
+                    bullish_psar = df['PSARl_0.02_0.2'].replace(0, float('nan'))
+                    bearish_psar = df['PSARs_0.02_0.2'].replace(0, float('nan'))
+                    
+                    price_ax.scatter(df.index, bullish_psar,
+                            color='green', label='PSAR Bullish', marker='^', s=20)
+                    price_ax.scatter(df.index, bearish_psar,
+                            color='red', label='PSAR Bearish', marker='v', s=20)
+                
+                elif indicator == 'vwap':
+                    df['VWAP'] = ta.vwap(high=df.high, low=df.low, close=df.close, volume=df.volume)
+                    price_ax.plot(df['VWAP'], color='purple', label='VWAP')
+                
+                elif indicator == 'wma':
+                    df['WMA'] = ta.wma(df.close, length=20)
+                    price_ax.plot(df['WMA'], color='cyan', label='WMA')
+                
+            else:
+                # Add separate indicators in their own subplots
+                if indicator == 'rsi':
+                    df['RSI'] = ta.rsi(df.close)
+                    ax = axs[current_subplot]
+                    ax.axhline(y=70, color='r', linestyle='--')
+                    ax.axhline(y=30, color='g', linestyle='--')
+                    ax.plot(df['RSI'], color='orange', label='RSI')
+                    ax.grid(True)
+                    ax.set_ylabel('RSI')
+                    ax.set_xlim(left=left_limit)
+                    current_subplot += 1
+                
+                elif indicator == 'mfi':
+                    df['MFI'] = ta.mfi(high=df.high, low=df.low, close=df.close, volume=df.volume)
+                    ax = axs[current_subplot]
+                    ax.axhline(y=80, color='r', linestyle='--')
+                    ax.axhline(y=20, color='g', linestyle='--')
+                    ax.plot(df['MFI'], color='purple', label='MFI')
+                    ax.grid(True)
+                    ax.set_ylabel('MFI')
+                    ax.set_xlim(left=left_limit)
+                    current_subplot += 1
+
+                elif indicator == 'roc':
+                    df['ROC'] = ta.roc(df.close)
+                    ax = axs[current_subplot]
+                    ax.axhline(y=0, color='k', linestyle='--')
+                    ax.plot(df['ROC'], color='magenta', label='ROC')
+                    ax.grid(True)
+                    ax.set_ylabel('Rate of Change (%)')
+                    ax.set_xlim(left=left_limit)
+                    current_subplot += 1
+                
+                elif indicator == 'mom':
+                    df['MOM'] = ta.mom(df.close)
+                    ax = axs[current_subplot]
+                    ax.axhline(y=0, color='k', linestyle='--')
+                    ax.plot(df['MOM'], color='blue', label='Momentum')
+                    ax.grid(True)
+                    ax.set_ylabel('Momentum')
+                    ax.set_xlim(left=left_limit)
+                    current_subplot += 1
+
+        # Add legend to price plot
+        price_ax.legend(loc='upper right')
     
-        print(f"Calculating {indicator}...")
-        if indicator == 'rsi':
-            # Calculate RSI
-            df['RSI'] = ta.rsi(df.close)
-            fig, axs = plt.subplots(2, 1, gridspec_kw={'height_ratios': [3, 1]}, figsize=(12, 8))
-
-            # Price subplot
-            axs[0].plot(df.close)
-            axs[0].set_title(f'{pair} Price Chart ({interval}) - RSI')
-            axs[0].set_ylabel('Price')
-            axs[0].grid()
-
-            # RSI subplot
-            axs[1].axhline(y=70, color='r', linestyle='--')
-            axs[1].axhline(y=30, color='g', linestyle='--')
-            axs[1].plot(df['RSI'], color='orange')
-            axs[1].grid(True)
-            axs[1].set_ylabel('RSI')
-
-        elif indicator == 'mfi':
-            # Calculate MFI
-            df['MFI'] = ta.mfi(high=df.high, low=df.low, close=df.close, volume=df.volume)
-            fig, axs = plt.subplots(2, 1, gridspec_kw={'height_ratios': [3, 1]}, figsize=(12, 8))
-
-            # Price subplot
-            axs[0].plot(df.close)
-            axs[0].set_title(f'{pair} Price Chart ({interval}) - MFI')
-            axs[0].set_ylabel('Price')
-            axs[0].grid()
-
-            # MFI subplot
-            axs[1].axhline(y=80, color='r', linestyle='--')
-            axs[1].axhline(y=20, color='g', linestyle='--')
-            axs[1].plot(df['MFI'], color='orange')
-            axs[1].grid(True)
-            axs[1].set_ylabel('MFI')
-
-        elif indicator == 'bbands':
-            # Calculate Bollinger Bands
-            bbands = ta.bbands(df.close, length=20, std=2)
-            df['BB_UPPER'] = bbands['BBU_20_2.0']
-            df['BB_MIDDLE'] = bbands['BBM_20_2.0'] 
-            df['BB_LOWER'] = bbands['BBL_20_2.0']
-            
-            # Plot price and Bollinger Bands
-            plt.plot(df.close, label='Price', color='blue')
-            plt.plot(df['BB_UPPER'], label='Upper Band', color='red', linestyle='--')
-            plt.plot(df['BB_MIDDLE'], label='Middle Band', color='orange', linestyle='-')
-            plt.plot(df['BB_LOWER'], label='Lower Band', color='green', linestyle='--')
-            
-            # Set title and labels
-            plt.title(f'{pair} Price Chart ({interval}) - Bollinger Bands')
-            plt.ylabel('Price')
-            plt.grid(True)
-
-        elif indicator == 'ema':
-            # Plot price and EMA
-            plt.plot(df.close)
-            df['EMA'] = ta.ema(df.close)
-            plt.plot(df['EMA'], color='orange')
-
-            # Set title and labels
-            plt.title(f'{pair} Price Chart ({interval}) - EMA')
-            plt.ylabel('Price')
-            plt.grid(True)
-
-        elif indicator == 'supertrend':
-            # Calculate Supertrend
-            supertrend = ta.supertrend(high=df.high, low=df.low, close=df.close, length=7, multiplier=3.0)
-            df['SUPERTREND'] = supertrend['SUPERT_7_3.0']
-            df['SUPERTREND_DIRECTION'] = supertrend['SUPERTd_7_3.0']
-            
-            # Remove garbage datapoints where supertrend is 0
-            df['SUPERTREND'] = df['SUPERTREND'].replace(0, float('nan'))
-            
-            # Plot price
-            plt.plot(df.close, color='blue')
-            
-            # Plot Supertrend with different colors based on direction
-            for i in range(len(df)-1):
-                if df['SUPERTREND_DIRECTION'].iloc[i] == 1:  # Uptrend
-                    plt.plot(df.index[i:i+2], df['SUPERTREND'].iloc[i:i+2], 
-                            color='green', label='Supertrend' if i == 0 else "")
-                else:  # Downtrend
-                    plt.plot(df.index[i:i+2], df['SUPERTREND'].iloc[i:i+2], 
-                            color='red', label='Supertrend' if i == 0 else "")
-
-            # Set title and labels
-            plt.title(f'{pair} Price Chart ({interval}) - Supertrend')
-            plt.ylabel('Price')
-            plt.grid(True)
-
-        elif indicator == 'psar':
-            # Calculate Parabolic SAR
-            psar = ta.psar(high=df.high, low=df.low, close=df.close)
-            df['PSARl_0.02_0.2'] = psar['PSARl_0.02_0.2']  # Long position SAR
-            df['PSARs_0.02_0.2'] = psar['PSARs_0.02_0.2']  # Short position SAR
-            
-            # Plot price
-            plt.plot(df.close, label='Price', color='blue')
-            
-            # Plot PSAR dots, filtering out 0 values
-            bullish_psar = df['PSARl_0.02_0.2'].replace(0, float('nan'))
-            bearish_psar = df['PSARs_0.02_0.2'].replace(0, float('nan'))
-            
-            plt.scatter(df.index, bullish_psar,
-                       color='green', label='PSAR Bullish', marker='^', s=20)
-            plt.scatter(df.index, bearish_psar,
-                       color='red', label='PSAR Bearish', marker='v', s=20)
-
-            # Set title and labels
-            plt.title(f'{pair} Price Chart ({interval}) - Parabolic SAR')
-            plt.ylabel('Price')
-            plt.grid(True)
-
-        elif indicator == 'vwap':
-            # Calculate VWAP
-            df['VWAP'] = ta.vwap(high=df.high, low=df.low, close=df.close, volume=df.volume)
-            
-            # Plot price and VWAP
-            plt.plot(df.close, label='Price', color='blue')
-            plt.plot(df['VWAP'], color='purple', label='VWAP')
-
-            # Set title and labels
-            plt.title(f'{pair} Price Chart ({interval}) - VWAP')
-            plt.ylabel('Price')
-            plt.grid(True)
-
-        elif indicator == 'roc':
-            # Calculate Rate of Change
-            df['ROC'] = ta.roc(df.close)
-            fig, axs = plt.subplots(2, 1, gridspec_kw={'height_ratios': [3, 1]}, figsize=(12, 8))
-
-            # Price subplot
-            axs[0].plot(df.close)
-            axs[0].set_title(f'{pair} Price Chart ({interval}) - ROC')
-            axs[0].set_ylabel('Price')
-            axs[0].grid(True)
-
-            # ROC subplot
-            axs[1].axhline(y=0, color='k', linestyle='--')
-            axs[1].plot(df['ROC'], color='purple')
-            axs[1].grid(True)
-            axs[1].set_ylabel('Rate of Change (%)')
-
-        elif indicator == 'mom':
-            # Calculate Momentum
-            df['MOM'] = ta.mom(df.close)
-            fig, axs = plt.subplots(2, 1, gridspec_kw={'height_ratios': [3, 1]}, figsize=(12, 8))
-
-            # Price subplot
-            axs[0].plot(df.close)
-            axs[0].set_title(f'{pair} Price Chart ({interval}) - Momentum')
-            axs[0].set_ylabel('Price')
-            axs[0].grid(True)
-
-            # Momentum subplot
-            axs[1].axhline(y=0, color='k', linestyle='--')
-            axs[1].plot(df['MOM'], color='purple')
-            axs[1].grid(True)
-            axs[1].set_ylabel('Momentum')
-
-        elif indicator == 'wma':
-            # Plot price and WMA
-            plt.plot(df.close, label='Price')
-            df['WMA'] = ta.wma(df.close, length=20)
-            plt.plot(df['WMA'], color='orange', label='WMA')
-
-            # Set title and labels
-            plt.title(f'{pair} Price Chart ({interval}) - WMA')
-            plt.ylabel('Price')
-            plt.grid(True)
-            
+        # Adjust layout to prevent overlap
+        plt.tight_layout()
+        
         # Save chart to bytes
         img = BytesIO()
         plt.savefig(img, format='png')
