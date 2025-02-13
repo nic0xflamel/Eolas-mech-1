@@ -2,6 +2,7 @@
     "dev": {
         "custom/nic/fundamental_analysis/0.1.0": "bafybeib6quvqgv42gchqiooykjfqu4ai2jn4vunb55vbu4dwbq4mmofqpi",
         "custom/nic/technical_analysis/0.1.0": "bafybeidtasrjvmx32z2uevwlhz2turxmm7jwhffpmoiu4gcs6zzrujzsvq",
+        "custom/ivan/macro_outlook/0.1.0": "bafybeigtuo2znjlhylljbctqtr2geintsxw7ku6ipg2c4sntjwlq46jnse",
         "protocol/valory/acn_data_share/0.1.0": "bafybeidcsknfwrifklzz2rp57eri5x3tv72tgjn5k7opauagtxiw3agbvy",
         "protocol/valory/websocket_client/0.1.0": "bafybeibpdrbicrvegv74phyjxglq2hcce7abyz3ateuyoq5up6ilmz7n4q",
         "contract/valory/agent_mech/0.1.0": "bafybeig6qwc3hy24sy7h3rx337dvm7b22hookkp4opfs3ql5crl4d35w5y",
