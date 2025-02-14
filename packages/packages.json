@@ -1,6 +1,10 @@
 {
     "dev": {
         "custom/nic/prediction_tool/0.1.0": "bafybeibp3bqzgijltohnafj6babt55ekn36uitec6llnhry6oikpx33atu",
+        "custom/ivan/wallets_trades_history/0.1.0": "bafybeic4z6xoj3knqkb4y5cs445z4rugf2va2rifftxpc6fhhaf55lvn3m",
+        "custom/victorpolisetty/mech_creation_tool/0.1.0": "bafybeihyqw7aeoudqkrwyhgtnxhwvmbonm2gpzqxy5ilorrlq5f6o2jxxu",
+        "custom/nic/fundamental_analysis/0.1.0": "bafybeib6quvqgv42gchqiooykjfqu4ai2jn4vunb55vbu4dwbq4mmofqpi",
+        "custom/nic/technical_analysis/0.1.0": "bafybeidtasrjvmx32z2uevwlhz2turxmm7jwhffpmoiu4gcs6zzrujzsvq",
         "protocol/valory/acn_data_share/0.1.0": "bafybeidcsknfwrifklzz2rp57eri5x3tv72tgjn5k7opauagtxiw3agbvy",
         "protocol/valory/websocket_client/0.1.0": "bafybeibpdrbicrvegv74phyjxglq2hcce7abyz3ateuyoq5up6ilmz7n4q",
         "contract/valory/agent_mech/0.1.0": "bafybeig6qwc3hy24sy7h3rx337dvm7b22hookkp4opfs3ql5crl4d35w5y",
