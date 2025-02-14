@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 #
@@ -16,3 +15,4 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+# ------------------------------------------------------------------------------
