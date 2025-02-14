@@ -1,5 +1,7 @@
 {
     "dev": {
+        "custom/nic/dune_query_analyse/0.1.0": "bafybeia25j56fr35fpgsgodrgjzxjol6pdfyd3x2ety4ok76xougmunn2y",
+        "custom/nic/dune_query_extract/0.1.0": "bafybeidi2fhdnbbakd6ipcfq55kk4y734jzrcwpamnhs6sdochem7obv7e",
         "custom/nic/prediction_tool/0.1.0": "bafybeibp3bqzgijltohnafj6babt55ekn36uitec6llnhry6oikpx33atu",
         "custom/ivan/wallets_trades_history/0.1.0": "bafybeic4z6xoj3knqkb4y5cs445z4rugf2va2rifftxpc6fhhaf55lvn3m",
         "custom/victorpolisetty/mech_creation_tool/0.1.0": "bafybeihyqw7aeoudqkrwyhgtnxhwvmbonm2gpzqxy5ilorrlq5f6o2jxxu",
