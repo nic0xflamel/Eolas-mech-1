@@ -128,14 +128,14 @@ def get_macro_outlook(clients: APIClients, prediction_data: tuple[float, float])
     try:
         direction_score, volatility_score = prediction_data
         
-        prompt = f"""Please provide a comprehensive macro outlook report for Bitcoin's short and medium term prospects.
+        prompt = f"""Please provide a comprehensive macro outlook report for the crypto market's short and medium term prospects.
 
-Using the provided direction score ({direction_score:.4f}, between -1 and 1) and volatility score ({volatility_score:.4f}), but without mentioning the actual numerical values in your response, please create a detailed macro outlook report that includes:
+Using the provided price direction score ({direction_score:.4f}, between -1 and 1) and price volatility score ({volatility_score:.4f}, based on the standard deviation of price changes) for Bitcoin over the next 24 hours, but without mentioning the actual numerical values in your response, please create a detailed macro outlook report that includes:
 
 Please create a detailed macro outlook report that includes:
-1. Overall price trend analysis including the direction score
+1. Overall price trend analysis including the price direction score
 2. Key price levels and potential support/resistance zones
-3. Volatility assessment including the volatility score
+3. Volatility assessment including the price volatility score
 4. Risk factors and potential price movement catalysts
 5. Summary and conclusion
 
