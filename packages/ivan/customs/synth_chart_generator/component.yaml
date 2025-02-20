@@ -1,8 +1,8 @@
-name: btc_price_prediction
+name: synth_chart_generator
 author: ivan
 version: 0.1.0
 type: custom
-description: A tool for generating BTC price prediction charts using price prediction
+description: A tool for generating asset price prediction charts using price prediction
   data from Synth. Analyzes multiple price simulations to determine the most likely
   price trajectory and visualizes both the median prediction and individual simulation
   paths over a 24-hour period.
@@ -10,9 +10,9 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeiduv4x5ar7wnuw65ilijlbax26pbloajxckdsxvc67hdzc6vo22qa
-  btc_price_prediction.py: bafybeic522xebynt3uni2bwmnvi5auybpp4auwuiu6alz5nmtq6jz7gnwi
+  synth_chart_generator.py: bafybeifbwq2c5j35wlhggzdapgj4brhlrgwmozp6wgleb72ezahes3f47u
 fingerprint_ignore_patterns: []
-entry_point: btc_price_prediction.py
+entry_point: synth_chart_generator.py
 callable: run
 dependencies:
   openai:
