@@ -6,8 +6,8 @@ description: Custom tool created using the CLI
 license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
-  __init__.py: bafybeidlhllgpf65xwk357wukpguuaz6hxhkyh7dwplv2xkxlrlk4b7zty
-  get_aave_position_summary_request.py: bafybeicytmdkgdehao6obnqoff6fpugr6gpbjw4ztxcsswn5ne76vhboqi
+  __init__.py: bafybeiaesxnkadyuhsacvtrz774edwal2ygz3hillffbkdi4yq2z44r5hm
+  get_aave_position_summary_request.py: bafybeid6dclponprztd72qjhvnnzo527zig77gj7vfgdfyrjkkq7ksb4ei
 fingerprint_ignore_patterns: []
 entry_point: get_aave_position_summary_request.py
 callable: run
