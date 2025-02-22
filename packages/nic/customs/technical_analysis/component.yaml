@@ -8,7 +8,7 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeic2dy4aq24ssmyulv77u3ovgdjtgga6vltbf3iadyoqtfm337zaku
-  technical_analysis.py: bafybeidcrqitvlnucj4fxuw5drfbugc7f4ynrrexcxtz6gux6plzrnc474
+  technical_analysis.py: bafybeig7rhv2j5sct4zbhcfu6k4xz42enbtidxtwuxuyu6xvebtydjn6tq
 fingerprint_ignore_patterns: []
 entry_point: technical_analysis.py
 callable: run

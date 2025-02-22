@@ -8,7 +8,7 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeifau5an457nihwb2lreqnredewy2ky5na4z5kkavr6epav2grwvty
-  dune_query_extract.py: bafybeianepvqxw3flxlt7aikxm4mqjcwsr2wqulpyifxkxv7o3u5hwqxl4
+  dune_query_extract.py: bafybeifqecc5hzunwe7r4ogahgpogndgqlgleoqcd5fnzci3hnyiphixuu
 fingerprint_ignore_patterns: []
 entry_point: dune_query_extract.py
 callable: run

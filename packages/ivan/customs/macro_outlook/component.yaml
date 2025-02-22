@@ -10,7 +10,7 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeiffsiqc57thnti46n5kyv5qo3x2mzobe5jggzbdergw4e2nt4ee5u
-  macro_outlook.py: bafybeicl2ljlnyymbcke3oltukswebe6qw6nrxvkg74rebg7wgsdnb7u6y
+  macro_outlook.py: bafybeigq3vp4a45wae6cc6wefcsqh2mcmjz2hbazobg3jwdxdn72itpjxm
 fingerprint_ignore_patterns: []
 entry_point: macro_outlook.py
 callable: run
