@@ -1,0 +1,15 @@
+name: aave_asset_price_request
+author: victorpolisetty
+version: 0.1.0
+type: custom
+description: A tool that runs a prompt against the compass labs api to get the price
+  of an asset from Aave tool files.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeicokooiqnmkldoi5tx6zv6svtjoak5ghj5o3vsi4iliq2pvqaa6uy
+  aave_asset_price_request.py: bafybeicnraguoandi3wvuvwnixdiuzr64kz3wiae4tqn2gyn2ki2xprij4
+fingerprint_ignore_patterns: []
+entry_point: aave_asset_price_request.py
+callable: run
+dependencies: {}
