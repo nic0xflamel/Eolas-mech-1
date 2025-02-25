@@ -120,29 +120,3 @@ def run(**kwargs) -> MechResponse:
             "timestamp": datetime.datetime.now().isoformat()
         }
         return f"Failed to generate analysis: {str(e)}", "", error_dict, None
-
-if __name__ == "__main__":
-    import os
-    from dotenv import load_dotenv
-
-    # Load environment variables
-    load_dotenv()
-
-    # Define test inputs
-    test_kwargs = {
-        "api_keys": {
-            "openai": os.getenv("OPENAI_API_KEY")
-        },
-        "chain": "ethereum:mainnet",
-        "asset": "WETH"
-    }
-
-    # Run the function
-    response_text, _, metadata, _ = run(**test_kwargs)
-
-    # Print results
-    print("\n=== Response from GPT-4o ===\n")
-    print(response_text)
-
-    print("\n=== Metadata ===\n")
-    print(metadata)
