@@ -1,0 +1,15 @@
+name: get_address_token_balance
+author: victorpolisetty
+version: 0.1.0
+type: custom
+description: A tool that runs a prompt against OpenAI and generates a summary of a
+  specific wallets token balance tool files.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeicokooiqnmkldoi5tx6zv6svtjoak5ghj5o3vsi4iliq2pvqaa6uy
+  get_address_token_balance.py: bafybeibd6tvnw65w6nw4dmlas5lgg2caakmazy3ofd2suogosvagwi2rqi
+fingerprint_ignore_patterns: []
+entry_point: get_address_token_balance.py
+callable: run
+dependencies: {}

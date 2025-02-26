@@ -12,4 +12,3 @@ fingerprint_ignore_patterns: []
 entry_point: perplexity_request.py
 callable: run
 dependencies: {}
-
