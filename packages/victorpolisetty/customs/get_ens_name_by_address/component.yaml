@@ -1,14 +1,14 @@
-name: perplexity_request
+name: get_ens_name_by_address
 author: victorpolisetty
 version: 0.1.0
 type: custom
-description: A tool that runs a prompt against Perplexity AI.
+description: A tool that runs a prompt against OpenAI and gets your ENS name.
 license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeidlhllgpf65xwk357wukpguuaz6hxhkyh7dwplv2xkxlrlk4b7zty
-  perplexity_request.py: bafybeifle55snbuuv5b52hlsqv27n2sayn3xpglzuaazgavx64amgiqxfi
+  get_ens_name_by_address.py: bafybeihofo5gnocefmg5yduffc7vvqymypmuu7wv3745yzfo2vcqtbkyc4
 fingerprint_ignore_patterns: []
-entry_point: perplexity_request.py
+entry_point: get_ens_name_by_address.py
 callable: run
 dependencies: {}
