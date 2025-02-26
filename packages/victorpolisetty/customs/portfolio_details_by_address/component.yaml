@@ -1,0 +1,14 @@
+name: portfolio_details_by_address
+author: victorpolisetty
+version: 0.1.0
+type: custom
+description: A tool that runs a prompt against OpenAI and gets protfolio details.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeidlhllgpf65xwk357wukpguuaz6hxhkyh7dwplv2xkxlrlk4b7zty
+  portfolio_details_by_address.py: bafybeid2xlttpamq4qwh4zp4acemxyiaxwj5isujw6sr6xlkmstwvjiuym
+fingerprint_ignore_patterns: []
+entry_point: portfolio_details_by_address.py
+callable: run
+dependencies: {}
