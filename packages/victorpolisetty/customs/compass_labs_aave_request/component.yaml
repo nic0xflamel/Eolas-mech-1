@@ -1,0 +1,15 @@
+name: compass_labs_aave_request
+author: victorpolisetty
+version: 0.1.0
+type: custom
+description: A tool that runs the compass labs aave api requests.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeidlhllgpf65xwk357wukpguuaz6hxhkyh7dwplv2xkxlrlk4b7zty
+  compass_labs_aave_request.py: bafybeifle55snbuuv5b52hlsqv27n2sayn3xpglzuaazgavx64amgiqxfi
+fingerprint_ignore_patterns: []
+entry_point: compass_labs_aave_request.py
+callable: run
+dependencies: {}
+
