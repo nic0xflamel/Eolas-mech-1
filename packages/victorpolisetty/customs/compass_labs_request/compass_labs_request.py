@@ -9,20 +9,16 @@ from langchain_compass.toolkits import LangchainCompassToolkit
 # Load API key from .env
 load_dotenv()
 API_KEY = os.getenv("YOUR-GPT-KEY-HERE")
-# Initialize Compass Toolkit (uses the public SDK only)
+# Initialize Compass Toolkit
 try:
     toolkit = LangchainCompassToolkit(compass_api_key=API_KEY)
     tools = toolkit.get_tools()
-    tools = [
-    t for t in toolkit.get_tools()
-    if "price" in t.name or "price" in t.description.lower()
-    ]
     print(tools)
 except Exception as e:
     raise RuntimeError(f"Failed to initialize LangchainCompassToolkit: {e}")
 
 # LLM setup
-llm = ChatOpenAI(model="gpt-4", temperature=0)
+llm = ChatOpenAI(model="gpt-4o-mini")
 
 # LangChain agent with all tools (no filtering)
 agent = initialize_agent(
