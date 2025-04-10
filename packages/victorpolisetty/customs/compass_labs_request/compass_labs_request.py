@@ -13,7 +13,6 @@ API_KEY = os.getenv("YOUR-GPT-KEY-HERE")
 try:
     toolkit = LangchainCompassToolkit(compass_api_key=API_KEY)
     tools = toolkit.get_tools()
-    print(tools)
 except Exception as e:
     raise RuntimeError(f"Failed to initialize LangchainCompassToolkit: {e}")
 
@@ -24,12 +23,13 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 agent = initialize_agent(
     tools=tools,
     llm=llm,
-    agent=AgentType.OPENAI_FUNCTIONS,  # ✅ Supports multi-input tools
+    agent=AgentType.OPENAI_FUNCTIONS,
     verbose=True,
 )
 
 # Run Compass API based on natural language
-def run(prompt: str) -> Dict[str, Any]:
+def run(**kwargs) -> Dict[str, Any]:
+    prompt = kwargs.get("prompt")
     if not prompt or len(prompt.strip()) < 3:
         return {"error": "Prompt too short or empty."}
     try:
@@ -42,7 +42,7 @@ def run(prompt: str) -> Dict[str, Any]:
 if __name__ == "__main__":
     print("\n🧠 Compass Labs Natural Language Agent\n")
     user_input = input("Ask something: ")
-    output = run(user_input)
+    output = run(prompt=user_input)
 
     print("\n=== RESPONSE ===")
     if "result" in output:
