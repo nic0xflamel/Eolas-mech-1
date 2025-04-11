@@ -37,3 +37,14 @@ def run(**kwargs) -> Dict[str, Any]:
         return {"result": result}
     except Exception as e:
         return {"error": f"Agent execution failed: {str(e)}"}
+
+if __name__ == "__main__":
+    print("\n🧠 Compass Labs Natural Language Agent\n")
+    user_input = input("Ask something: ")
+    output = run(prompt=user_input)
+
+    print("\n=== RESPONSE ===")
+    if "result" in output:
+        print(output["result"])
+    else:
+        print(f"❌ Error: {output['error']}")
