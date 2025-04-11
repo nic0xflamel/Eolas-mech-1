@@ -7,11 +7,12 @@ from langchain.agents import initialize_agent, AgentType
 from langchain_compass.toolkits import LangchainCompassToolkit
 
 # Load API key from .env
+# Must set COMPASS_API_KEY
+# export COMPASS_API_KEY=sk-...
 load_dotenv()
-API_KEY = os.getenv("YOUR-GPT-KEY-HERE")
 # Initialize Compass Toolkit
 try:
-    toolkit = LangchainCompassToolkit(compass_api_key=API_KEY)
+    toolkit = LangchainCompassToolkit()
     tools = toolkit.get_tools()
 except Exception as e:
     raise RuntimeError(f"Failed to initialize LangchainCompassToolkit: {e}")
@@ -37,14 +38,3 @@ def run(**kwargs) -> Dict[str, Any]:
         return {"result": result}
     except Exception as e:
         return {"error": f"Agent execution failed: {str(e)}"}
-
-if __name__ == "__main__":
-    print("\n🧠 Compass Labs Natural Language Agent\n")
-    user_input = input("Ask something: ")
-    output = run(prompt=user_input)
-
-    print("\n=== RESPONSE ===")
-    if "result" in output:
-        print(output["result"])
-    else:
-        print(f"❌ Error: {output['error']}")

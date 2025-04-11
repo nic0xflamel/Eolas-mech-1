@@ -7,7 +7,7 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeidlhllgpf65xwk357wukpguuaz6hxhkyh7dwplv2xkxlrlk4b7zty
-  compass_labs_request.py: bafybeiheox5p4ydkxfuzosluon3zedluxsw54rcmekeq2vvsjxfqpn5xzy
+  compass_labs_request.py: bafybeidmyia5nl2y5pxhvftju3dxxiuxch5bwwbtpqcjqw5ojo7fqajoim
 fingerprint_ignore_patterns: []
 entry_point: compass_labs_request.py
 callable: run
