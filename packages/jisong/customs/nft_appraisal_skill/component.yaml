@@ -1,0 +1,16 @@
+name: nft_appraisal_skill
+author: jisong
+version: 0.1.0
+type: custom
+description: AI Agent skill to appraise NFT
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeidee52bpvlwgklw4tzcpcz4zloexl6laanx5ylbiqfr46ymhwqm34
+  nft_appraisal_skill.py: bafybeihjc7bq6bkyenq3q365moz5th3zrhu6sw4jdogubb5ezbirnaygda
+fingerprint_ignore_patterns: []
+entry_point: nft_appraisal_skill.py
+callable: run
+dependencies:
+  langchain-openai:
+    version: '>=0.3.8'
