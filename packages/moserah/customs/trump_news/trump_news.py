@@ -13,8 +13,6 @@ import openai
 from enum import Enum
 from collections import Counter
 import functools
-from dotenv import load_dotenv
-
 
 # Type Definitions
 MechResponse = Tuple[str, Optional[str], Optional[Dict[str, Any]], Any, Any]
@@ -24,13 +22,10 @@ class ReportingTone(str, Enum):
     SATIRICAL = "satirical"
     LATE_NIGHT = "late_night"
 
-
-load_dotenv()
-
 class APIClients:
-    def __init__(self):
-        self.news_api_key = os.getenv("NEWS_API_KEY")
-        self.openai_api_key = os.getenv("OPENAI_API_KEY")
+    def __init__(self, api_keys: Dict[str, str]):
+        self.news_api_key = api_keys["news_api"]
+        self.openai_api_key = api_keys["openai"]
         
         if not self.news_api_key:
             raise ValueError("Missing NEWS_API_KEY")
@@ -105,7 +100,7 @@ def run(**kwargs) -> Tuple[str, Optional[str], Optional[Dict[str, Any]], Any]:
         - None: Reserved for future use
     """
     try:
-        clients = APIClients()
+        clients = APIClients(kwargs["api_keys"])
         
         # Parse parameters
         tone = kwargs.get("tone", "serious")

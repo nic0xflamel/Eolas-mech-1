@@ -4,10 +4,6 @@ import requests
 import functools
 import os
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 alchemy_networks = {
     "ethereum": "https://eth-mainnet.g.alchemy.com",
     "base": "https://base-mainnet.g.alchemy.com",
@@ -110,8 +106,9 @@ def with_key_rotation(func: Callable):
 def run(**kwargs) -> Tuple[Optional[str], Optional[Dict[str, Any]], Any, Any]:
     try:
         asking_prompt = kwargs["prompt"]  # `prompt` argument name is for compatibility with the original resolver.
-        openai_api_key = os.getenv("OPENAI_API_KEY")
-        alchemy_api_key = os.getenv("ALCHEMY_API_KEY")
+        api_keys = kwargs["api_keys"]
+        openai_api_key = api_keys["openai"]
+        alchemy_api_key = api_keys["alchemy"]
 
         llm = ChatOpenAI(
             model="gpt-4o-mini",

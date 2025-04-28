@@ -1,0 +1,19 @@
+name: grid_pair_screener
+author: jayshree
+version: 0.1.0
+type: custom
+description: Grid Trading Pair Screener
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  README.md: bafybeifj3svsmyq6szpwav4qc7hr6fbk3hmt45cfeqrbfarvpcriricc4q
+  __init__.py: bafybeigpgsvduwhvclhfbqplbvs4qneujwcauyi6oe6xcmkuy4iqmgf3ze
+  grid_pair_screener.py: bafybeihnqpmzkjpnkwyj7luek7cuijhc6riuwkkafdbmh6m74saajndthq
+fingerprint_ignore_patterns: []
+entry_point: grid_pair_screener.py
+callable: run
+dependencies:
+  openai:
+    version: '>=1.0.0'
+  dune-client:
+    version: '>=1.0.0'

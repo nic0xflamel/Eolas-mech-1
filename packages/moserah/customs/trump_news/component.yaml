@@ -9,7 +9,7 @@ aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   README.md: bafybeia4j4fxm45d4fyuz7qcu2be3ol6qcgdqk3gcwhwa5j3u6yx72mgr4
   __init__.py: bafybeibopfsaeo2ywpq62ifwecjkbyjtvscbo53ng7lrptoukaxl3wqs5e
-  trump_news.py: bafybeieb2j2vyujncomq5xzxpner6ahjjli2lsw4c2wgm2tbbsccv6meiu
+  trump_news.py: bafybeifm2wfydcp66upbs4aln5vgnfzykzrq4h3dqlrkfcv4n2gngeu73q
 fingerprint_ignore_patterns: []
 entry_point: trump_news.py
 callable: run
