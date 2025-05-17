@@ -9,18 +9,18 @@ aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   README.md: bafybeia4j4fxm45d4fyuz7qcu2be3ol6qcgdqk3gcwhwa5j3u6yx72mgr4
   __init__.py: bafybeibopfsaeo2ywpq62ifwecjkbyjtvscbo53ng7lrptoukaxl3wqs5e
-  trump_news.py: bafybeifm2wfydcp66upbs4aln5vgnfzykzrq4h3dqlrkfcv4n2gngeu73q
+  trump_news.py: bafybeif5mfmkitvxlt57lfbvuurczvm26fobptyna6ig56k4277za6pwyi
 fingerprint_ignore_patterns: []
 entry_point: trump_news.py
 callable: run
 dependencies:
   nltk:
-    version: '>=3.8.1'
+    version: '>=3.9.1'
   newsapi-python:
     version: '>=0.2.7'
   openai:
-    version: '>=1.0.0'
+    version: '>=1.65.5'
   python-dotenv:
-    version: '>=1.0.0'
+    version: '>=0.21.1'
   requests:
     version: '>=2.31.0'

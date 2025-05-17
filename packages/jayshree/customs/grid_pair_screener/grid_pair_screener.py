@@ -43,7 +43,7 @@ class APIClients:
             raise ValueError("Missing required API keys")
             
         self.openai_client = OpenAI(api_key=self.openai_api_key)
-        self.dune_client = DuneClient.from_env()
+        self.dune_client = DuneClient(self.dune_api_key)
 
     def get_dune_results(self) -> Optional[Dict[str, Any]]:
         """Fetch results from Dune query"""

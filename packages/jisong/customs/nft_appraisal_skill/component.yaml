@@ -13,6 +13,6 @@ entry_point: nft_appraisal_skill.py
 callable: run
 dependencies:
   langchain-openai:
-    version: '>=0.3.8'
+    version: '>=0.3.16'
   requests:
     version: '>=2.31.0'

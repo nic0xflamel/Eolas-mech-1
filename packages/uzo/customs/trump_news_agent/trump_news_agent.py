@@ -373,13 +373,7 @@ def build_run_result(
     )
 
 @with_key_rotation
-def run(
-    prompt: str,
-    api_keys: Any,
-    timeframe_days: int = DEFAULT_NEWS_TIMEFRAME_DAYS,
-    model: str = DEFAULT_OPENAI_MODEL,
-    **kwargs: Any,  # Just to ignore any other arguments passed to the resolver by the benchmark script.
-) -> Tuple[str, Optional[str], Optional[Dict[str, Any]], Any]:
+def run(**kwargs) -> Tuple[str, Optional[str], Optional[Dict[str, Any]], Any]:
     """
     Run the Trump News Analyzer.
     
@@ -392,6 +386,10 @@ def run(
     Returns:
         A tuple containing (result_json, markdown_report, None, None)
     """
+    api_keys = kwargs["api_keys"]
+    timeframe_days = kwargs.get('timeframe_days', DEFAULT_NEWS_TIMEFRAME_DAYS)
+    model = kwargs.get('model', DEFAULT_OPENAI_MODEL)
+    prompt = kwargs["prompt"]
     query = prompt or "Donald Trump"
     openai_api_key = api_keys["openai"]
     news_api_key = api_keys["news_api"]

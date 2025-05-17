@@ -8,15 +8,15 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeibrtsk7zngkkglxogjj6adxvlf5gnlqm56w7mv4t2bmogjwbiaylu
-  grid_analyser.py: bafybeigxezgkjvazvkc5pyyqblte6krri7gjmlubaya273p23nyel5udoa
+  grid_analyser.py: bafybeieetcndlc5eaicepilfjohuxm5z62kr4spmriv2zhn2iqy7rzjjh4
 fingerprint_ignore_patterns: []
 entry_point: grid_analyser.py
 callable: run
 dependencies:
   pandas:
-    version: '>=2.1.0'
+    version: '>=2.2.3'
   numpy:
-    version: '>=2.0.0'
+    version: '>=1.26.4'
   ccxt:
     version: '>=4.0.0'
   matplotlib:

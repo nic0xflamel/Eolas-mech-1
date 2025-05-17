@@ -8,12 +8,16 @@ aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   README.md: bafybeifj3svsmyq6szpwav4qc7hr6fbk3hmt45cfeqrbfarvpcriricc4q
   __init__.py: bafybeigpgsvduwhvclhfbqplbvs4qneujwcauyi6oe6xcmkuy4iqmgf3ze
-  grid_pair_screener.py: bafybeihnqpmzkjpnkwyj7luek7cuijhc6riuwkkafdbmh6m74saajndthq
+  grid_pair_screener.py: bafybeifqyxfrpd6mzjwbyjry7m3i3ox3kknxeqnrhvksvaxw6ddm2xmowq
 fingerprint_ignore_patterns: []
 entry_point: grid_pair_screener.py
 callable: run
 dependencies:
   openai:
-    version: '>=1.0.0'
+    version: '>=1.65.5'
   dune-client:
-    version: '>=1.0.0'
+    version: '>=1.7.9'
+  pandas:
+    version: '>=2.2.3'
+  numpy:
+    version: '>=1.26.4'

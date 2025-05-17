@@ -42,6 +42,7 @@ class APIClients:
             nltk.data.find('sentiment/vader_lexicon.zip')
             nltk.data.find('corpora/stopwords')
         except LookupError:
+            nltk.download('punkt_tab')
             nltk.download('punkt')
             nltk.download('vader_lexicon')
             nltk.download('stopwords')

@@ -693,9 +693,10 @@ def run(**kwargs) -> Tuple[Optional[str], Optional[Dict[str, Any]], Any, Any]:
         return "Grid Trading Analyzer failed. Error returned", "", {'status': 'error', 'message': 'Command is required'}, None
     
     # Extract configuration parameters
-    exchange_id = kwargs.get('exchange', 'binance')
-    api_key = kwargs.get('exchange_api_key', None)
-    api_secret = kwargs.get('exchange_api_secret', None)
+    exchange_id = "coinbase"
+    api_keys = kwargs['api_keys']
+    exchange_key = api_keys['exchange_api_key']
+    exchange_secret = api_keys['exchange_api_secret']
     quote_currency = kwargs.get('quote_currency', 'USDT')
     symbols = kwargs.get('symbols', [])
     output_format = kwargs.get('output_format', 'dict')
@@ -704,8 +705,8 @@ def run(**kwargs) -> Tuple[Optional[str], Optional[Dict[str, Any]], Any, Any]:
     try:
         analyzer = GridTradingAnalyzer(
             exchange_id=exchange_id,
-            api_key=api_key,
-            api_secret=api_secret
+            api_key=exchange_key,
+            api_secret=exchange_secret
         )
         
         # Update parameters if provided
