@@ -1,0 +1,27 @@
+name: compass_defi
+author: nic_f
+version: 0.1.0
+type: custom
+description: A mech tool for the Compass DeFi API.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  IMPLEMENTATION_NOTES.md: bafybeia3qluip6jgsusxc3dtx5rozkf5zpustxon4ft7cfzmidof6avyei
+  compass_defi.py: bafybeigt25qzlbt32lxo5tg6qtpyglviq6rbz74un6j5mewtyp3fo6iwkq
+  test_agent.py: bafybeihujts4c7npeqijz6mcgpklgfvecggb7jvx5vntjgzgbobjyghbja
+fingerprint_ignore_patterns: []
+entry_point: compass_defi.py
+callable: run
+dependencies:
+  compass_api_sdk:
+    version: ==0.9.42
+  requests:
+    version: ==2.28.2
+  langgraph:
+    version: '>=0.5.2'
+  langchain-google-genai:
+    version: '>=2.1.0'
+  langchain-core:
+    version: '>=0.3.0'
+  pydantic:
+    version: '>=2.0.0'
